@@ -3,11 +3,11 @@ static_mode_conf = False
 
 #Replace the part "192.168.190.10" with the ip-adress of your Bluesound player. 
 #You can find the ip adress of your player in the official APP under Help and then Diagnostics
-base_url_conf = "http://192.168.190.10:11000/"
+base_url_conf = "http://192.168.86.28:11000/"
 
 #If you want to use the app on Windows, replace this with the drive letter of 
 #your network shared music-folder.
-windows_path_conf = "S:/"
+windows_path_conf = "C:\Python"
 
 #If you want to use the app on Linux (like Raspbian on an Raspberry pi), 
 #replace this with the path of your network shared music-folder.

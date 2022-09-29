@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 import datetime as dt
 import random
 from PIL import Image, ImageTk
+
 from app_conf import *
 
 static_mode = static_mode_conf
@@ -96,7 +97,7 @@ class Status(object):
                 else:
                     return quality    
         except IndexError as error:
-            return ""
+            return "Error"
 
     def check_repeat(self):
         try:
@@ -202,6 +203,22 @@ class Status(object):
             status_elements = self.get_status().getElementsByTagName("album")[0]
             album = status_elements.firstChild.data
             return album
+        except IndexError as error:
+            return ""
+
+    def check_state(self):        
+        try:
+            status_elements = self.get_status().getElementsByTagName("state")[0]
+            state = status_elements.firstChild.data
+            return state
+        except IndexError as error:
+            return ""
+
+    def check_volume(self):        
+        try:
+            status_elements = self.get_status().getElementsByTagName("volume")[0]
+            volume = status_elements.firstChild.data
+            return volume
         except IndexError as error:
             return ""
 
@@ -327,7 +344,7 @@ class Bluesound_play_dir(object):
         found_dir_converted = found_dir_converted.replace("\\", "/")
         print(base_url + "Add?service=LocalMusic&playnow=-1&path=" + found_dir_converted)
             
-        if no_clear is 0:
+        if no_clear == 0:
             urllib.request.urlopen(base_url + "Clear")
         time.sleep(.100)
 
@@ -338,9 +355,9 @@ class Bluesound_play_dir(object):
         if os.path.exists(found_dir + "/!shuffle_on.txt"):
             shuffle_on = 1
         
-        if shuffle_on is 0:
+        if shuffle_on == 0:
             urllib.request.urlopen(base_url + "Shuffle?state=0") # state 0 is geen shuffel; state 1 is shuffel
-        if shuffle_on is 1:
+        if shuffle_on == 1:
             urllib.request.urlopen(base_url + "Shuffle?state=1") # state 0 is geen shuffel; state 1 is shuffel
             time.sleep(.100)
             urllib.request.urlopen(base_url + "Skip")
@@ -411,34 +428,34 @@ class Keyb_control(object):
     def __init__(self, keyb_input, status, control):
         self.control = control
 
-        if keyb_input is "4": # previous track
+        if keyb_input == "4": # previous track
             urllib.request.urlopen(base_url + "Back")
   
-        if keyb_input is "6": # next track
+        if keyb_input == "6": # next track
             urllib.request.urlopen(base_url + "Skip")
     
-        if keyb_input is "0": # Stop
+        if keyb_input == "0": # Stop
             urllib.request.urlopen(base_url + "Stop")
 
-        if keyb_input is "3": # Play
+        if keyb_input == "3": # Play
             urllib.request.urlopen(base_url + "Play")
     
-        if keyb_input is "8": # repeat on
+        if keyb_input == "8": # repeat on
             urllib.request.urlopen(base_url + "Repeat?state=0")
     
-        if keyb_input is "1": # repeat off
+        if keyb_input == "1": # repeat off
             urllib.request.urlopen(base_url + "Repeat?state=2")
     
-        if keyb_input is "2": # shuffle off
+        if keyb_input == "2": # shuffle off
             urllib.request.urlopen(base_url + "Shuffle?state=0")
     
-        if keyb_input is "5": # repeat on
+        if keyb_input == "5": # repeat on
             urllib.request.urlopen(base_url + "Shuffle?state=1")
     
-        if keyb_input is "7": # seek 30 sec back
+        if keyb_input == "7": # seek 30 sec back
             self.control.seekbackward()
             
-        if keyb_input is "9": # seek 30 sec forward
+        if keyb_input == "9": # seek 30 sec forward
             self.control.seekforward()
 
 class Bluesound_goto_specified_playlist_position(object):
